@@ -15,9 +15,8 @@ namespace CompactGit.Components.Pages
         private string nickname = "";
         private string email = "";
 
-
         public string Id { get => id; set { id = Regex.Replace(value, "[^0-9a-zA-Z._-]", ""); } }
-        public string Passwd { get => passwd; set { passwd =  Regex.Replace(value, "[^\x20-\x7E]", ""); } }
+        public string Passwd { get => passwd; set { passwd = Regex.Replace(value, "[^\x20-\x7E]", ""); } }
         public string PasswdRe { get => passwdRe; set { passwdRe = Regex.Replace(value, "[^\x20 -\x7E]", ""); } }
         public string Nickname { get => nickname; set { nickname = Regex.Replace(value, "[^0-9a-zA-Z._-]", ""); } }
         public string Email { get => email; set { email = Regex.Replace(value, "[^0-9a-zA-Z._@-]", ""); } }
@@ -33,7 +32,6 @@ namespace CompactGit.Components.Pages
         protected override async Task OnInitializedAsync()
         {
             Context = DbFactory.CreateDbContext();
-
             await base.OnInitializedAsync();
         }
 
@@ -51,7 +49,6 @@ namespace CompactGit.Components.Pages
             }
 
             await Context!.Users.LoadAsync();
-
             Context!.Users.Add(new GitDb.User()
             {
                 Id = Id,
@@ -59,8 +56,7 @@ namespace CompactGit.Components.Pages
                 Nickname = Nickname,
                 Email = Email,
             });
-
-            Context!.SaveChanges();
+            await Context.SaveChangesAsync();
 
             NavigationManager.NavigateTo("/");
         }
