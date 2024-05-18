@@ -1,12 +1,12 @@
 using CompactGit.Utils;
-using Google.Protobuf;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Mvc.Razor.Internal;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
+using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CompactGit.Components.Pages
 {
@@ -30,17 +30,19 @@ namespace CompactGit.Components.Pages
         protected override async Task OnInitializedAsync()
         {
             Context = DbFactory.CreateDbContext();
-
             await base.OnInitializedAsync();
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            string loginCookie = await Cookie.GetValue("login");
-
-            if (loginCookie != "")
+            if (firstRender)
             {
-                NavigationManager.NavigateTo("/user/" + loginCookie);
+                string loginCookie = await Cookie.GetValue("login");
+
+                if (!string.IsNullOrEmpty(loginCookie))
+                {
+                    NavigationManager.NavigateTo("/user/" + loginCookie);
+                }
             }
 
             await base.OnAfterRenderAsync(firstRender);
@@ -48,41 +50,48 @@ namespace CompactGit.Components.Pages
 
         private string PassHashing(string pass)
         {
-            return Convert.ToBase64String(SHA256.HashData(Encoding.UTF8.GetBytes(pass)));
+            using var sha256 = SHA256.Create();
+            return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(pass)));
         }
 
-        private async void LoginButtonClick(MouseEventArgs e)
+        private async Task LoginButtonClick()
         {
-            if (Id == "" || Passwd == "")
+            if (string.IsNullOrEmpty(Id) || string.IsNullOrEmpty(Passwd))
             {
                 ErrorMsg = "ID or Password is empty";
                 return;
             }
 
-            await Context!.Users.LoadAsync();
-
-            GitDb.User? user = Context!.Users.Where(x => x.Id == Id && x.Pw == PassHashing(Passwd)).FirstOrDefault();
-
-            if (user != null)
+            try
             {
-                UserUrl = user.Id;
-                await Cookie.SetValue("login", UserUrl);
+                await Context!.Users.LoadAsync();
 
-                NavigationManager.NavigateTo("/user/" + UserUrl);
+                var user = Context.Users.FirstOrDefault(x => x.Id == Id && x.Pw == PassHashing(Passwd));
+
+                if (user != null)
+                {
+                    UserUrl = user.Id;
+                    await Cookie.SetValue("login", UserUrl);
+                    NavigationManager.NavigateTo("/user/" + UserUrl);
+                }
+                else
+                {
+                    ErrorMsg = "Invalid ID or Password";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                ErrorMsg = "Invalid ID or Password";
-                return;
+                Console.WriteLine($"Error during login: {ex.Message}");
+                ErrorMsg = "An error occurred during login.";
             }
         }
 
-        private void SignUpButtonClick(MouseEventArgs e)
+        private void SignUpButtonClick()
         {
             NavigationManager.NavigateTo("/sign-up");
         }
 
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Context?.Dispose();
         }
