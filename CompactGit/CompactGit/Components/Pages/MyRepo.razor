@@ -1,4 +1,5 @@
-﻿@page "/repos/{UserUrl}"
+﻿@*
+@page "/repos/{UserUrl}"
 @rendermode InteractiveServer
 
 <PageTitle>My Repository</PageTitle>
@@ -52,6 +53,64 @@
                     <td>@emp.UserId/@emp.RepoName</td>
                     <td>@emp.Description</td>
                     <td>@emp.IsPublic</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+*@
+
+@page "/repos/{UserUrl}"
+@rendermode InteractiveServer
+
+<PageTitle>My Repository</PageTitle>
+
+<h1>My Repository</h1>
+
+<div class="find_box">
+    <input type="text"
+           name="find"
+           placeholder=" Find My Repository"
+           @bind="FindInput">
+    <button id="New" class="btn btn-primary"
+            type="button"
+            @onclick="NewButtonClickAsync">
+        New
+    </button>
+</div>
+
+<div class="My_repo">
+    <button @onclick="ToggleTypeDropdown">Type</button>
+    <div id="typeDropdown" style="display: @(showTypeDropdown ? "block" : "none")">
+        <button @onclick="() => FilterRepos(true)">Public</button>
+        <button @onclick="() => FilterRepos(false)">Private</button>
+    </div>
+</div>
+
+<div class="Settings">
+    <button id="Settings" class="btn btn-primary"
+            type="button"
+            @onclick="SettingsButtonClickAsync">
+        Settings
+    </button>
+</div>
+
+<div>
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Repository</th>
+                <th>Description</th>
+                <th>Is Public</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var repo in FilteredRepoList)
+            {
+                <tr>
+                    <td>@repo.UserId/@repo.RepoName</td>
+                    <td>@repo.Description</td>
+                    <td>@repo.IsPublic ? "Yes" : "No"</td>
                 </tr>
             }
         </tbody>

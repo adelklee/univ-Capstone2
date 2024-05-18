@@ -3,14 +3,137 @@
 
 <PageTitle>@UserUrl</PageTitle>
 
-<h1>@UserUrl</h1>
+<style>
+    body {
+        background-color: #232227;
+    }
 
-<h3>Profile</h3>
+    .profile {
+        width: 200px;
+        height: 200px;
+        border: 3px solid orange;
+        background-color: gray;
+        margin-top: 30px;
+        color: white;
+        margin-left: 30px;
+        position: absolute;
+        border-radius: 100px;
+    }
+
+    .find_box {
+        width: 700px;
+        height: 50px;
+        border: 3px solid orange;
+        position: relative;
+        margin-left: 300px;
+        border-radius: 7px;
+        margin-top: 30px;
+        display: flex;
+    }
+
+        .find_box input {
+            width: 692px;
+            height: 45px;
+            background-color: #232227;
+            font-size: 20px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .find_box button {
+            width: 100px;
+            height: 45px;
+            position: absolute;
+            right: 0;
+            top: 0;
+            background-color: greenyellow;
+            border-radius: 7px;
+            color: gray;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+            .find_box button:hover {
+                background-color: green;
+            }
+
+    .My_repo {
+        display: flex;
+        align-items: center;
+    }
+
+        .My_repo button {
+            width: 100px;
+            height: 50px;
+            font-size: 15px;
+            border-radius: 7px;
+            border: 3px solid orange;
+            cursor: pointer;
+            position: absolute;
+            margin-top: -55px;
+            margin-left: 1100px;
+            background-color: greenyellow;
+            font-weight: 700;
+            color: gray;
+        }
+
+    .Settings {
+        margin-left: 30px;
+        margin-top: 250px;
+    }
+
+        .Settings button {
+            width: 200px;
+            height: 50px;
+            border: 3px solid orange;
+            background-color: yellowgreen;
+            color: gray;
+            font-weight: 700;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+    .Logout {
+        margin-left: 30px;
+        margin-bottom: 20px;
+    }
+
+        .Logout button {
+            width: 70px;
+            height: 40px;
+            border: 3px solid white;
+            background-color: white;
+            color: gray;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 7px;
+        }
+
+
+    .Introduce {
+        width: 900px;
+        height: 500px;
+        background-color: #232227;
+        margin-left: 300px;
+        border: 3px solid orange;
+        color: white;
+        position: absolute;
+        top: 180px;
+        border-radius: 7px;
+    }
+
+        .Introduce p {
+            margin-left: 20px;
+        }
+</style>
 
 <div class="find_box">
 
-    <input type="text" 
-           name="find" 
+    <input type="text"
+           name="find"
            placeholder="Find Other User's Repository"
            @bind=FindInput>
 
@@ -37,7 +160,7 @@
 
     <button id="Settings" class="btn btn-primary"
             type="button"
-            @onclick="SettingsButtonClickAsync" 
+            @onclick="SettingsButtonClickAsync"
             hidden=@IsNotMyProfile>
         Settings
     </button>
