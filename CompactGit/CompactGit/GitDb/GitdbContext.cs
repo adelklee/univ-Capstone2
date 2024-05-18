@@ -18,7 +18,7 @@ public partial class GitDbContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-      => optionsBuilder.UseMySQL("server=localhost;database=git_db;uid=root;pwd=1479");
+      => optionsBuilder.UseMySQL("server=localhost;database=git_db;uid=root;pwd=");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

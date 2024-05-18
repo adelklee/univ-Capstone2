@@ -1,89 +1,107 @@
 ﻿@page "/sign-up"
 @rendermode InteractiveServer
 
-<PageTitle>Sign up</PageTitle>
+<style>
+    :root {
+        --primary: #0d6efd; /* 파란색 */
+        --background: #212529; /* 다크모드 배경 색상 */
+        --secondary: #ffffff; /* 글자 색상 */
+    }
 
-<h1>Sign up</h1>
+    body {
+        margin: 0;
+        background-color: var(--background);
+        color: var(--secondary);
+        font-family: Arial, sans-serif;
+    }
 
-<div>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+    }
 
-    <label for="id">
-        ID:
-    </label>
+    h1 {
+        margin-bottom: 1rem;
+        font-size: 2rem;
+    }
 
-    <input @bind-value="Id"
-           @bind-value:event="oninput"
-           placeholder="Your ID"
-           required />
+    .form-group {
+        margin-bottom: 1rem;
+        width: 300px;
+    }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid var(--secondary);
+            border-radius: 0.25rem;
+            background-color: transparent;
+            color: var(--secondary);
+            font-size: 1rem;
+        }
+
+    .signup-button {
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--primary);
+        border: none;
+        color: var(--secondary);
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+
+        .signup-button:hover {
+            background-color: darken(var(--primary), 10%);
+        }
+
+    .link {
+        margin-top: 1rem;
+    }
+
+        .link a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .link a:hover {
+                color: lighten(var(--primary), 10%);
+            }
+</style>
+
+<div class="container">
+    <h1>회원가입 페이지</h1>
+    <div class="form-group">
+        <label for="id">ID:</label>
+        <input @bind-value="Id" @bind-value:event="oninput" placeholder="Your ID" required />
+    </div>
+    <div class="form-group">
+        <label for="password">PW:</label>
+        <input @bind-value="Passwd" @bind-value:event="oninput" type="password" placeholder="Your Password" required />
+    </div>
+    <div class="form-group">
+        <label for="password">PW(Retry):</label>
+        <input @bind-value="PasswdRe" @bind-value:event="oninput" type="password" placeholder="Your Password" required />
+    </div>
+    <div class="form-group">
+        <label for="nickname">Nickname:</label>
+        <input @bind-value="Nickname" @bind-value:event="oninput" placeholder="Your Nickname" required pattern="^[a-zA-Z0-9_-.]*$" />
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input @bind-value="Email" @bind-value:event="oninput" placeholder="Your Email" required pattern="^[a-zA-Z0-9_-.@@]*$" />
+    </div>
+    <div>
+        <label for="error">@ErrorMsg</label>
+    </div>
+    <button class="signup-button" type="button" @onclick="SignUpButtonClick">회원가입</button>
+    <div class="link">
+        이미 계정이 있나요? <a href="/">로그인으로 이동</a>
+    </div>
 </div>
-
-<div>
-    
-    <label for="password">
-        PW:
-    </label>
-    
-    <input @bind-value="Passwd"
-           @bind-value:event="oninput"
-           type="password"
-           placeholder="Your Password"
-           required />
-
-</div>
-
-<div>
-
-    <label for="password">
-        PW(Retry):
-    </label>
-
-    <input @bind-value="PasswdRe"
-           @bind-value:event="oninput"
-           type="password"
-           placeholder="Your Password"
-           required />
-
-</div>
-
-<div>
-
-    <label for="nickname">
-        Nickname:
-    </label>
-
-    <input @bind-value="Nickname"
-           @bind-value:event="oninput"
-           placeholder="Your Nickname"
-           required
-           pattern="^[a-zA-Z0-9_-.]*$" />
-
-</div>
-
-<div>
-
-    <label for="email">
-        Email:
-    </label>
-
-    <input @bind-value="Email"
-           @bind-value:event="oninput"
-           placeholder="Your Email"
-           required
-           pattern="^[a-zA-Z0-9_-.@@]*$" />
-
-</div>
-
-<div>
-
-    <label for="error">
-        @ErrorMsg
-    </label>
-
-</div>
-
-<button class="btn btn-primary"
-        type="button"
-        @onclick="SignUpButtonClick">
-    Sign up
-</button>
-
