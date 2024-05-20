@@ -3,128 +3,19 @@
 
 <PageTitle>Login</PageTitle>
 
-<style>
-    :root {
-        --primary: #6f9bdd;
-        --secondary: #ffffff;
-        --secondary-hover: #6f69ca;
-    }
-
-    body {
-        margin: 0;
-        background-color: black;
-    }
-
-    .centering {
-        color: black;
-    }
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-    h1 {
-        color: var(--secondary);
-    }
-
-    .centering {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        width: 100vw;
-    }
-
-    .login-button, .signup-button {
-        background-color: var(--primary);
-        color: var(--background);
-        white-space: nowrap;
-        border: none;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 1rem;
-        line-height: 3.125rem;
-        outline: none;
-        font-size: 1.125rem;
-        letter-spacing: .025em;
-        text-decoration: none;
-        cursor: pointer;
-        font-weight: 800;
-        min-height: 3.125rem;
-        width: 100%;
-        border-radius: 0.5rem;
-    }
-
-    .text-field input {
-        color: var(--secondary);
-        font-size: 1rem;
-        font-weight: 500;
-        max-width: 100%;
-        width: 100%;
-        border: 1px solid var(--secondary);
-        height: 3.125rem;
-        letter-spacing: .03rem;
-        background-color: transparent;
-        outline: none;
-        transition: .25s;
-        border-radius: 0.5rem;
-        text-indent: 1.25rem;
-        margin-top: 0.5rem;
-    }
-
-    .my-form__button:hover {
-        background-color: var(--primary-hover);
-    }
-
-    .text-field {
-        position: relative;
-    }
-
-        .text-field input:focus {
-            border: 1px solid var(--primary);
-        }
-
-        .text-field label {
-            color: var(--secondary);
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-    .signup {
-        display: flex;
-        justify-content: center;
-    }
-
-        .signup a {
-            color: var(--primary);
-            font-weight: 800;
-            font-size: 20px;
-        }
-
-            .signup a:hover {
-                color: white;
-            }
-</style>
-
 <div class="centering">
-    <EditForm Model="@this" OnValidSubmit="LoginButtonClick">
-        <DataAnnotationsValidator />
-        <h1>Login</h1>
-        <div class="text-field">
-            <label for="id">Id:</label>
-            <InputText @bind-Value="Id" name="id" placeholder="Your Id" class="form-control" required />
-        </div>
-        <div class="text-field">
-            <label for="password">Password:</label>
-            <InputText @bind-Value="Passwd" name="password" type="password" placeholder="Your Password" class="form-control" required />
-        </div>
-        <div class="text-field">
-            <span style="color:red">@ErrorMsg</span>
-        </div>
-        <button type="submit" class="login-button">Login</button>
-        <button type="button" class="signup-button" @onclick="SignUpButtonClick">Signup</button>
-    </EditForm>
+    <h1>Login</h1>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" @bind="Id" />
+        <label for="id">ID</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" @bind="Passwd" pattern="" />
+        <label for="password">Password</label>
+    </div>
+    <div class="text-field">
+        <span style="color:red">@ErrorMsg</span>
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="LoginButtonClick">Login</button>
+    <button type="button" class="btn btn-primary" @onclick="SignUpButtonClick">Signup</button>
 </div>

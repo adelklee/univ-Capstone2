@@ -1,89 +1,23 @@
-﻿@*
-@page "/repos/{UserUrl}"
+﻿@page "/repos/{UserUrl}"
 @rendermode InteractiveServer
 
 <PageTitle>My Repository</PageTitle>
 
 <h1>My Repository</h1>
-
-<div class="user">
-    <!-- Profile content -->
-</div>
-
-<div class="find_box">
-    <input type="text"
-           name="find"
-           placeholder=" Find My Repository"
-           @bind=FindInput>
-    <button id="New" class="btn btn-primary"
-            type="button"
-            @onclick="NewButtonClickAsync">
-        New
-    </button>
-</div>
-
-<div class="My_repo">
-    <button @onclick="TypeButtonClickAsync">Type</button>
-</div>
-
-<div id="visibilityDropdown" style="display: none;">
-</div>
-
-<div class="Settings">
-    <button id="Settings" class="btn btn-primary"
-            type="button"
-            @onclick="SettingsButtonClickAsync">
-        Settings
-    </button>
-</div>
 
 <div>
-    <table class='table'>
-        <thead>
-            <tr>
-                <th>Repository</th>
-                <th>Description</th>
-                <th>Is Public</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var emp in RepoList)
-            {
-                <tr>
-                    <td>@emp.UserId/@emp.RepoName</td>
-                    <td>@emp.Description</td>
-                    <td>@emp.IsPublic</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" @bind="FindInput">
+        <label>Repository Name</label>
+    </div>
 </div>
-*@
+<button id="New" class="btn btn-primary" type="button" @onclick="NewButtonClickAsync">New</button>
 
-@page "/repos/{UserUrl}"
-@rendermode InteractiveServer
-
-<PageTitle>My Repository</PageTitle>
-
-<h1>My Repository</h1>
-
-<div class="find_box">
-    <input type="text"
-           name="find"
-           placeholder=" Find My Repository"
-           @bind="FindInput">
-    <button id="New" class="btn btn-primary"
-            type="button"
-            @onclick="NewButtonClickAsync">
-        New
-    </button>
-</div>
-
-<div class="My_repo">
-    <button @onclick="ToggleTypeDropdown">Type</button>
+<div>
+    <button class="btn btn-primary" @onclick="ToggleTypeDropdown">Type</button>
     <div id="typeDropdown" style="display: @(showTypeDropdown ? "block" : "none")">
-        <button @onclick="() => FilterRepos(true)">Public</button>
-        <button @onclick="() => FilterRepos(false)">Private</button>
+        <button class="btn btn-primary" @onclick="() => FilterRepos(true)">Public</button>
+        <button class="btn btn-primary" @onclick="() => FilterRepos(false)">Private</button>
     </div>
 </div>
 
